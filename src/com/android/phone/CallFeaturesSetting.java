@@ -1798,7 +1798,7 @@ public class CallFeaturesSetting extends PreferenceActivity
             if (button != null) button.setEnabled(false);
             button = findPreference(BUTTON_CDMA_OPTIONS);
             if (button != null) button.setEnabled(false);
-        } else {
+        }
             if (mButtonNotifications != null) {
                 boolean notification =
                     mButtonNotifications.getSharedPreferences()
@@ -1810,7 +1810,6 @@ public class CallFeaturesSetting extends PreferenceActivity
                 int dtmf = Settings.System.getInt(getContentResolver(),
                         Settings.System.DTMF_TONE_TYPE_WHEN_DIALING, DTMF_TONE_TYPE_NORMAL);
                 mButtonDTMF.setValueIndex(dtmf);
-            }
         }
 
         if (mButtonAutoRetry != null) {
