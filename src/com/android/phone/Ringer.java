@@ -309,7 +309,7 @@ public class Ringer {
                                     }
                                 }
 				// are we going to loop it?
-                                if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.RINGER_LOOP, 1) == 1) {
+                                if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.RINGER_LOOP, 1) != 0) {
                                 // yes!
                                 int duration = r.getDuration();
                                 // ok, repeat the ringer after 0.5s
