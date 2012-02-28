@@ -52,12 +52,15 @@ public final class AccelerometerListener {
     public static final int ORIENTATION_UNKNOWN = 0;
     public static final int ORIENTATION_VERTICAL = 1;
     public static final int ORIENTATION_HORIZONTAL = 2;
+    public static final int ORIENTATION_FLIPDOWN = 3;
 
     private static final int ORIENTATION_CHANGED = 1234;
 
     private static final int VERTICAL_DEBOUNCE = 100;
     private static final int HORIZONTAL_DEBOUNCE = 500;
     private static final double VERTICAL_ANGLE = 50.0;
+
+    private boolean mEnable = false;
 
     public interface OrientationListener {
         public void orientationChanged(int orientation);
@@ -67,6 +70,10 @@ public final class AccelerometerListener {
         mListener = listener;
         mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    public boolean isEnabled() {
+      return mEnable;
     }
 
     public void enable(boolean enable) {
@@ -81,6 +88,7 @@ public final class AccelerometerListener {
                 mSensorManager.unregisterListener(mSensorListener);
                 mHandler.removeMessages(ORIENTATION_CHANGED);
             }
+          mEnable = enable;
         }
     }
 
@@ -126,6 +134,11 @@ public final class AccelerometerListener {
         // convert to degrees
         angle = angle * 180.0 / Math.PI;
         int orientation = (angle >  VERTICAL_ANGLE ? ORIENTATION_VERTICAL : ORIENTATION_HORIZONTAL);
+
+        if (z < -8.0) {
+          orientation = ORIENTATION_FLIPDOWN;
+        }
+
         if (VDEBUG) Log.d(TAG, "angle: " + angle + " orientation: " + orientation);
         setOrientation(orientation);
     }
